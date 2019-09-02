@@ -9,7 +9,7 @@ const http = require('http');
 function createServer(port) {
   let state = 10;
   function showResponseToClient(response, state) {
-    response.setHeader('Content', 'application/json');
+    response.setHeader('Content-Header', 'application/json');
     response.write(JSON.stringify(state));
     response.end();
   }
