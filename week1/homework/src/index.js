@@ -1,8 +1,7 @@
+/* eslint-disable no-console */
 'use strict';
 
-const {
-  createServer
-} = require('./server');
+const { createServer } = require('./server');
 
 const PORT = 3000;
 
