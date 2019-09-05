@@ -5,36 +5,43 @@ const http = require('http');
 /* `createServer` MUST return an instance of `http.Server` otherwise the tests
  * will fail.
  */
+function showResponseToClient(response, state, statusCode) {
+  response.statusCode = statusCode;
+  response.setHeader('Content-Header', 'application/json');
+  response.write(JSON.stringify(state));
+  response.end();
+}
 
 function createServer(port) {
   let state = 10;
-  function showResponseToClient(response, state) {
-    response.setHeader('Content-Header', 'application/json');
-    response.write(JSON.stringify(state));
-    response.end();
-  }
-
-  const server = http.createServer((request, response) => {
+  // const handleError = require('error-handler');
+  // const statusCode = handleError(async() => {});
+  const server = http.createServer((request, response, statusCode, message) => {
     // TODO: Write your homework code here
     switch (request.url) {
       case '/state':
-        showResponseToClient(response, { state });
+        // response.statusCode = 200;
+        showResponseToClient(response, { state }, 200);
         break;
       case '/add':
         state++;
-        showResponseToClient(response, { state });
+        // response.statusCode = 200;
+        showResponseToClient(response, { state }, 200);
         break;
       case '/subtract':
         state--;
-        showResponseToClient(response, { state });
+        // eslint-disable-next-line no-trailing-spaces
+        // response.statusCode = 200;
+        showResponseToClient(response, { state }, 200);
         break;
       case '/reset':
         state = 10;
-        showResponseToClient(response, { state });
+        // response.statusCode = 200;
+        showResponseToClient(response, { state }, 200);
         break;
       default:
-        response.statusCode = 404;
-        showResponseToClient(response, { error: 'Not found' });
+        // response.statusCode = 404;
+        showResponseToClient(response, { error: 'Not found' }, 404);
     }
   });
 
